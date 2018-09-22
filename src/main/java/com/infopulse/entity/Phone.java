@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "phones")
+public class Phone {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -20,10 +20,9 @@ public class Order {
     private Long id;
 
 
-    @Column(name = "name", unique = false, nullable = false, length = 100)
-    private String name;
+    @Column(name = "phone_number", unique = true, nullable = false, length = 10)
+    private String phoneNumber;
 
-    @ManyToOne
-    private Customer customer;
-
+    @OneToOne
+    Customer customer;
 }

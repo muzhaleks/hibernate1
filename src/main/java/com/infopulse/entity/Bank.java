@@ -6,13 +6,15 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "banks")
+public class Bank {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -23,7 +25,6 @@ public class Order {
     @Column(name = "name", unique = false, nullable = false, length = 100)
     private String name;
 
-    @ManyToOne
-    private Customer customer;
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Customer> customers = new ArrayList<>();
 }

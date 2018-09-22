@@ -6,6 +6,10 @@
     <persistence-unit name="org.hibernate.tutorial.jpa">
         <class>com.infopulse.entity.Customer</class>
         <class>com.infopulse.entity.Order</class>
+        <class>com.infopulse.entity.Phone</class>
+        <class>com.infopulse.entity.Bank</class>
+        <class>com.infopulse.entity.GoodCustomer</class>
+
          <properties>
             <property name="hibernate.connection.driver_class" value = "org.postgresql.Driver"/>
             <property name="hibernate.connection.username" value="postgres"/>
@@ -13,7 +17,7 @@
             <property name="hibernate.dialect" value = "org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.show_sql" value = "true"/>
             <property name="hibernate.hbm2ddl.auto" value = "create"/>
-            <property name="hibernate.connection.url" value = "jdbc:postgresql://127.0.0.1/hibernate1"/>
+            <property name="hibernate.connection.url" value = "jdbc:postgresql://127.0.0.1/hibernate2"/>
             <property name="hibernate.connection.CharSet" value="utf8"/>
             <property name="hibernate.connection.characterEncoding" value="utf8"/>
             <property name="hibernate.connection.useUnicode" value="true"/>

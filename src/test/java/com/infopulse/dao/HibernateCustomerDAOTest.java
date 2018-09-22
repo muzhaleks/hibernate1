@@ -1,11 +1,10 @@
 package com.infopulse.dao;
 
-import com.infopulse.entity.Address;
-import com.infopulse.entity.Customer;
-import com.infopulse.entity.Order;
+import com.infopulse.entity.*;
 import com.infopulse.factory.Factory;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -30,17 +29,52 @@ public class HibernateCustomerDAOTest {
 
         Order order1 =new Order();
         order1.setName("ffff");
+        order1.setCustomer(customer);
 
         Order order2 =new Order();
         order2.setName("jjjj");
+        order2.setCustomer(customer);
 
         customer.addOrder(order1);
         customer.addOrder(order2);
 
+        Phone phone = new Phone();
+        phone.setPhoneNumber("555666777");
+        phone.setCustomer(customer);
+
+        customer.setPhone(phone);
+
+        Bank bank = new Bank();
+        bank.setName("Private");
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(customer);
+        bank.setCustomers(customerList);
+
+        customer.setBanks(new ArrayList<Bank>(){{add(bank);}});
 
         customerDAO.insertCustomer(customer);
 
+        //new customer
+        GoodCustomer goodCustomer = new GoodCustomer();
+        goodCustomer.setDiscount(20);
+        goodCustomer.setName("Petya");
+        goodCustomer.setSurename("Pupkin");
+        goodCustomer.setAddress(address);
+
+        Bank newBank = new Bank();
+        newBank.setName("Private");
+        List<Customer> newCustomerList = new ArrayList<>();
+        customerList.add(goodCustomer);
+        newBank.setCustomers(newCustomerList);
+
+        goodCustomer.setBanks(new ArrayList<Bank>(){{add(newBank);}});
+
+        customerDAO.insertCustomer(goodCustomer);
+
+
+
         List<Customer> customers = customerDAO.getAllCustomers();
+//        customers.get(0).getOrders().get(0).getName(); //error in the case of LAZY.
 
         Customer customerResult = customers.stream()
                                            .filter(c -> c.getName().equals("Vasya"))

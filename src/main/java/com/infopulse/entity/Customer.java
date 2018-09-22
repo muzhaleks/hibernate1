@@ -10,11 +10,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.DiscriminatorType.STRING;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name="customers")
+@Inheritance(strategy=SINGLE_TABLE)
+@DiscriminatorColumn(name="Typecli", discriminatorType=STRING, length=20)
+@DiscriminatorValue("CUSTOMER")
 public class Customer {
 
     @Id
@@ -33,8 +39,14 @@ public class Customer {
     @Type(type = "com.infopulse.entity.type.AddressType")
     private Address address;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Order> orders = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    Phone phone;
+
+    @ManyToMany(mappedBy = "customers", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Bank> banks = new ArrayList<>();
 
     public void addOrder(Order order){
         orders.add(order);
