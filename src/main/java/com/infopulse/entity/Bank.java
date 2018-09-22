@@ -9,11 +9,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.InheritanceType.JOINED;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "banks")
+@Inheritance(strategy=JOINED)
 public class Bank {
 
     @Id

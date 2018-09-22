@@ -72,6 +72,23 @@ public class HibernateCustomerDAOTest {
         customerDAO.insertCustomer(goodCustomer);
 
 
+        //new customer
+        GoodCustomer customer2 = new GoodCustomer();
+        customer2.setDiscount(20);
+        customer2.setName("Petya");
+        customer2.setSurename("Pupkin");
+        customer2.setAddress(address);
+
+        BadBank newBank2 = new BadBank();
+        newBank2.setBlackList("jjjjjjjjjj");
+        newBank2.setName("Private");
+        List<Customer> newCustomerList2 = new ArrayList<>();
+        customerList.add(customer2);
+        newBank2.setCustomers(newCustomerList2);
+
+        customer2.setBanks(new ArrayList<Bank>(){{add(newBank2);}});
+
+        customerDAO.insertCustomer(customer2);
 
         List<Customer> customers = customerDAO.getAllCustomers();
 //        customers.get(0).getOrders().get(0).getName(); //error in the case of LAZY.
