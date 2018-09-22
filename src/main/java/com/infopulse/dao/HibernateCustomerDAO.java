@@ -13,6 +13,7 @@ public class HibernateCustomerDAO implements CustomerDAO{
         this.sessionFactory = sessionFactory;
 
     }
+
     @Override
     public void insertCustomer(Customer customer) {
         EntityManager entityManager = sessionFactory.createEntityManager();
@@ -30,5 +31,14 @@ public class HibernateCustomerDAO implements CustomerDAO{
         entityManager.getTransaction().commit();
         entityManager.close();
         return result;
+    }
+
+    @Override
+    public void deleteAll(){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.createNativeQuery("DELETE FROM customers");
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

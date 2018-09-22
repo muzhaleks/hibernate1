@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,4 +29,14 @@ public class Customer {
     @Column(name="surename", unique = false, nullable = false, length = 120)
     @Basic
     private String surename;
+
+    @Type(type = "com.infopulse.entity.type.AddressType")
+    private Address address;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Order> orders = new ArrayList<>();
+
+    public void addOrder(Order order){
+        orders.add(order);
+    }
 }

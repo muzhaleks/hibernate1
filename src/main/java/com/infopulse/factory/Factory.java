@@ -7,12 +7,13 @@ import org.hibernate.SessionFactory;
 import javax.persistence.Persistence;
 
 public class Factory {
-    final static Factory INSTANCE = new Factory();
+    public final static Factory INSTANCE = new Factory();
 
-    final private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    public Factory(){
-        sessionFactory = (SessionFactory) Persistence.createEntityManagerFactory( "org.hibernate.tutorial.jpa" );
+    private Factory(){
+        sessionFactory = (SessionFactory) Persistence
+                .createEntityManagerFactory( "org.hibernate.tutorial.jpa" );
     }
 
     public static Factory getInstance(){

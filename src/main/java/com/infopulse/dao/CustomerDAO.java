@@ -9,4 +9,6 @@ public interface CustomerDAO {
     void insertCustomer(Customer customer);
 
     List<Customer> getAllCustomers();
+
+    void deleteAll();
 }
