@@ -118,6 +118,24 @@ public class HibernateCustomerDAOTest {
         GoodsDAO otherGoodsDAO = instance.getGoodsDAO();
         otherGoodsDAO.insertOtherGoods(otherGoods);
 
+        ThirdGoods thirdGoods = new ThirdGoods();
+        thirdGoods.setCode("89");
+        thirdGoods.setCountry("Canada");
+        thirdGoods.setName("llll");
+
+        GoodsDAO thirdGoodsDAO = instance.getGoodsDAO();
+
+        thirdGoodsDAO.insertThirdGoods(thirdGoods);
+
+        ThirdGoods thirdGoods2 = new ThirdGoods();
+        thirdGoods2.setCode("89");
+        thirdGoods2.setCountry("Canada");
+        thirdGoods2.setName("sssss");
+
+        GoodsDAO thirdGoodsDAO2 = instance.getGoodsDAO();
+
+        thirdGoodsDAO2.insertThirdGoods(thirdGoods2);
+
         assertEquals("Vasya", customerResult.getName());
         assertEquals("Pupkin", customerResult.getSurename());
 

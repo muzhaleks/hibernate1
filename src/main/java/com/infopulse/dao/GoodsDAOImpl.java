@@ -2,6 +2,7 @@ package com.infopulse.dao;
 
 import com.infopulse.entity.Goods;
 import com.infopulse.entity.OtherGoods;
+import com.infopulse.entity.ThirdGoods;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,15 @@ public class GoodsDAOImpl implements GoodsDAO {
         EntityManager entityManager = sessionFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(otherGoods);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    @Override
+    public void insertThirdGoods(ThirdGoods thirdGoods) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(thirdGoods);
         entityManager.getTransaction().commit();
         entityManager.close();
     }
