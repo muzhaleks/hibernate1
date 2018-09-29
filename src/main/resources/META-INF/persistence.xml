@@ -10,6 +10,8 @@
         <class>com.infopulse.entity.Bank</class>
         <class>com.infopulse.entity.GoodCustomer</class>
         <class>com.infopulse.entity.BadBank</class>
+        <class>com.infopulse.entity.Goods</class>
+        <class>com.infopulse.entity.OtherGoods</class>
 
          <properties>
             <property name="hibernate.connection.driver_class" value = "org.postgresql.Driver"/>

@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 @Getter
 @NoArgsConstructor
 @Entity
-@DiscriminatorValue("GOOD_CUSTOMER")
+//@DiscriminatorValue("GOOD_CUSTOMER")
 public class GoodCustomer extends Customer{
 
     @Column(name = "discount")

@@ -98,6 +98,26 @@ public class HibernateCustomerDAOTest {
                                            .findFirst()
                                            .get();
 
+        Goods goods = new Goods();
+        goods.setCode("1234");
+        goods.setCountry("Ukraine");
+        goods.setName("tttt");
+
+        GoodsDAO goodsDAO = instance.getGoodsDAO();
+
+        goodsDAO.insertGoods(goods);
+
+        OtherCompositeKey key = new OtherCompositeKey();
+        key.setCode("6789");
+        key.setCountry("USA");
+
+        OtherGoods otherGoods = new OtherGoods();
+        otherGoods.setCompositeKey(key);
+        otherGoods.setName("pppp");
+
+        GoodsDAO otherGoodsDAO = instance.getGoodsDAO();
+        otherGoodsDAO.insertOtherGoods(otherGoods);
+
         assertEquals("Vasya", customerResult.getName());
         assertEquals("Pupkin", customerResult.getSurename());
 
