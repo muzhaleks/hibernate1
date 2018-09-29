@@ -97,6 +97,9 @@ public class HibernateCustomerDAOTest {
                                            .filter(c -> c.getName().equals("Vasya"))
                                            .findFirst()
                                            .get();
+        assertEquals("Vasya", customerResult.getName());
+        assertEquals("Pupkin", customerResult.getSurename());
+        assertEquals("Vasya-Pupkin", customerResult.getNameSurname());
 
         Goods goods = new Goods();
         goods.setCode("1234");
@@ -127,17 +130,21 @@ public class HibernateCustomerDAOTest {
 
         thirdGoodsDAO.insertThirdGoods(thirdGoods);
 
-        ThirdGoods thirdGoods2 = new ThirdGoods();
-        thirdGoods2.setCode("89");
-        thirdGoods2.setCountry("Canada");
-        thirdGoods2.setName("sssss");
+//        ThirdGoods thirdGoods2 = new ThirdGoods();
+//        thirdGoods2.setCode("89");
+//        thirdGoods2.setCountry("Canada");
+//        thirdGoods2.setName("sssss");
+//
+//        GoodsDAO thirdGoodsDAO2 = instance.getGoodsDAO();
+//
+//        thirdGoodsDAO2.insertThirdGoods(thirdGoods2);
 
-        GoodsDAO thirdGoodsDAO2 = instance.getGoodsDAO();
+        customerDAO = instance.getCustomerDAO();
+        Customer customer1 = customerDAO.findCustomer("Vasya", "Pupkin");
+        customer1.setName("Kolya");
 
-        thirdGoodsDAO2.insertThirdGoods(thirdGoods2);
+        customerDAO.updateCustomer(customer1);
 
-        assertEquals("Vasya", customerResult.getName());
-        assertEquals("Pupkin", customerResult.getSurename());
 
     }
 }

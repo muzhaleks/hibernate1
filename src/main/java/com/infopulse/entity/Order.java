@@ -24,6 +24,7 @@ public class Order {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name="mycustomer_id", referencedColumnName = "id")
     private Customer customer;
 
 }

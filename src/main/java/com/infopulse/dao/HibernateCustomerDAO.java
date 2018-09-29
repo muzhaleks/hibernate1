@@ -24,6 +24,15 @@ public class HibernateCustomerDAO implements CustomerDAO{
     }
 
     @Override
+    public void updateCustomer(Customer customer) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(customer);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    @Override
     public List<Customer> getAllCustomers() {
         EntityManager entityManager = sessionFactory.createEntityManager();
         entityManager.getTransaction().begin();
@@ -40,5 +49,18 @@ public class HibernateCustomerDAO implements CustomerDAO{
         entityManager.createNativeQuery("DELETE FROM customers");
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+
+    @Override
+    public Customer findCustomer(String name, String surename) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Customer customer = entityManager
+                .createQuery( "from Customer c where c.name = :name AND c.surename = :surename", Customer.class)
+                .setParameter("name", name).setParameter("surename", surename).getResultList().get(0);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return customer;
+
     }
 }
