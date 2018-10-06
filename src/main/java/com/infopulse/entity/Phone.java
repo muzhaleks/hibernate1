@@ -20,7 +20,7 @@ public class Phone {
     private Long id;
 
 
-    @Column(name = "phone_number", unique = true, nullable = false, length = 10)
+    @Column(name = "phone_number", unique = true, length = 10)
     private String phoneNumber;
 
     @OneToOne
