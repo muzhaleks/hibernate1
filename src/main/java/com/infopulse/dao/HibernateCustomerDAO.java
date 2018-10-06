@@ -1,13 +1,10 @@
 package com.infopulse.dao;
 
-import com.infopulse.entity.Count;
-import com.infopulse.entity.Customer;
+import com.infopulse.entity.*;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class HibernateCustomerDAO implements CustomerDAO{
@@ -91,6 +88,58 @@ public class HibernateCustomerDAO implements CustomerDAO{
         entityManager.getTransaction().commit();
         entityManager.close();
         return count;
+    }
+
+    @Override
+    public Customer findCustomerCriteria(String name, String surename){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Customer> criteria = builder.createQuery(Customer.class);
+        Root<Customer> root = criteria.from(Customer.class);
+
+        ParameterExpression<String> nameParam = builder.parameter( String.class );
+        ParameterExpression<String> surenameParam = builder.parameter( String.class );
+        criteria = criteria.select(root).where(builder
+                .and(
+                        builder.equal(root.get("name"), nameParam),
+                        builder.equal(root.get("surename"),surenameParam)
+                )
+        );
+
+        Customer customer = entityManager
+                .createQuery(criteria)
+                .setParameter(nameParam, name)
+                .setParameter(surenameParam, surename)
+                .getSingleResult();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return customer;
+
+
+    }
+
+    @Override
+    public List<String> findPhoneByCustomerName(String name) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<String> criteria = builder.createQuery(String.class);
+
+        Root<Phone> root = criteria.from(Phone.class);
+        Join<Phone, Customer> phoneCustomer
+                = root.join(Phone_.customer);
+
+       // ParameterExpression<Customer> customerParam = builder.parameter( Customer.class );
+        criteria = criteria
+                .select(root.get(Phone_.PHONE_NUMBER))
+                .where(builder.equal(root.get(Phone_.customer).get(Customer_.NAME), name));
+        List<String> phones= entityManager
+                .createQuery(criteria)
+                .getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return phones;
     }
 
 }

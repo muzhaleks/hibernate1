@@ -80,6 +80,12 @@ public class HibernateCustomerDAOTest {
         assertEquals(numberCustomers.longValue(),1);
         Count numberCust = customerDAO.numberCustomers();
         assertEquals(numberCust.getNumber(),1);
+
+        Customer customer1 = customerDAO.findCustomerCriteria("Vasya", "Pupkin");
+        assertEquals(customer1.getName(),"Vasya");
+
+        List<String> phoneNumbers = customerDAO.findPhoneByCustomerName("Vasya");
+        assertEquals(phoneNumbers.get(0),"555666777");
         //new customer
         GoodCustomer goodCustomer = new GoodCustomer();
         goodCustomer.setDiscount(20);
@@ -167,7 +173,7 @@ public class HibernateCustomerDAOTest {
 //        thirdGoodsDAO2.insertThirdGoods(thirdGoods2);
 
         customerDAO = instance.getCustomerDAO();
-        Customer customer1 = customerDAO.findCustomer("Vasya", "Pupkin");
+        customer1 = customerDAO.findCustomer("Vasya", "Pupkin");
         customer1.setName("Kolya");
 
         customerDAO.updateCustomer(customer1);
