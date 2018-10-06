@@ -1,5 +1,6 @@
 package com.infopulse.dao;
 
+import com.infopulse.entity.Count;
 import com.infopulse.entity.Customer;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public interface CustomerDAO {
     Customer findCustomer(String name, String surename);
 
     void updateCustomer(Customer customer);
+
+    long customers();
+
+    Count numberCustomers();
 
 
 

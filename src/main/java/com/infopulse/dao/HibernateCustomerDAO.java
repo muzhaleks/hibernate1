@@ -1,5 +1,6 @@
 package com.infopulse.dao;
 
+import com.infopulse.entity.Count;
 import com.infopulse.entity.Customer;
 import org.hibernate.SessionFactory;
 
@@ -68,6 +69,28 @@ public class HibernateCustomerDAO implements CustomerDAO{
         entityManager.close();
         return customer;
 
+    }
+
+    @Override
+    public long customers(){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Long count = entityManager
+                .createQuery("SELECT COUNT(c) FROM Customer c", Long.class).getSingleResult();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return count;
+    }
+
+    @Override
+    public Count numberCustomers(){
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Count count = entityManager
+                .createQuery("SELECT new com.infopulse.entity.Count(COUNT(c)) FROM Customer c", Count.class).getSingleResult();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return count;
     }
 
 }

@@ -73,10 +73,13 @@ public class HibernateCustomerDAOTest {
         List<Deposit> deposits = depositDAO.findDepositByCustomer("Vasya");
         assertEquals(deposits.get(0).getDep().toString(),"4567.00");
         List<Phone> phones = depositDAO.findPhoneByDepositValue(BigDecimal.valueOf(4567.00));
-       // assertEquals(phones.get(0).getPhoneNumber(),"555666777");
+        assertEquals(phones.get(0).getPhoneNumber(),"555666777");
         List<String> ph = depositDAO.findPhoneAsStringByDepositValue(BigDecimal.valueOf(4567.00));
         assertEquals(ph.get(0),"555666777");
-
+        Long numberCustomers = customerDAO.customers();
+        assertEquals(numberCustomers.longValue(),1);
+        Count numberCust = customerDAO.numberCustomers();
+        assertEquals(numberCust.getNumber(),1);
         //new customer
         GoodCustomer goodCustomer = new GoodCustomer();
         goodCustomer.setDiscount(20);
