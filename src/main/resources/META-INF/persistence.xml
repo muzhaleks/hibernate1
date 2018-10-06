@@ -13,7 +13,8 @@
         <class>com.infopulse.entity.BadBank</class>
         <class>com.infopulse.entity.OtherGoods</class>
         <class>com.infopulse.entity.ThirdGoods</class>
-
+        <class>com.infopulse.entity.Deposit</class>
+        <class>com.infopulse.entity.CustomerDeposit</class>
          <properties>
             <property name="hibernate.connection.driver_class" value = "org.postgresql.Driver"/>
             <property name="hibernate.connection.username" value="postgres"/>

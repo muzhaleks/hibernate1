@@ -31,7 +31,7 @@ public class Customer {
     @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
 
-    @Column(name="name", unique = false, nullable = false, length = 100)
+    @Column(name="name",nullable = false, length = 100)
     @Basic
     private String name;
 
@@ -56,6 +56,9 @@ public class Customer {
 
     @ManyToMany(mappedBy = "customers", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     List<Bank> banks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<CustomerDeposit> customerDeposits = new ArrayList<>();
 
     public void addOrder(Order order){
         orders.add(order);

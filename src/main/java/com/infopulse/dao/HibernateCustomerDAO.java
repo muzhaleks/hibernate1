@@ -4,6 +4,9 @@ import com.infopulse.entity.Customer;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class HibernateCustomerDAO implements CustomerDAO{
@@ -57,10 +60,14 @@ public class HibernateCustomerDAO implements CustomerDAO{
         entityManager.getTransaction().begin();
         Customer customer = entityManager
                 .createQuery( "from Customer c where c.name = :name AND c.surename = :surename", Customer.class)
-                .setParameter("name", name).setParameter("surename", surename).getResultList().get(0);
+                .setParameter("name", name)
+                .setParameter("surename", surename)
+                .getResultList()
+                .get(0);
         entityManager.getTransaction().commit();
         entityManager.close();
         return customer;
 
     }
+
 }

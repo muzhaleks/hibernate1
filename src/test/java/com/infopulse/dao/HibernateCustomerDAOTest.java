@@ -4,6 +4,8 @@ import com.infopulse.entity.*;
 import com.infopulse.factory.Factory;
 import org.junit.Test;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class HibernateCustomerDAOTest {
     @Test
     public void  insertAndSelectEntityTest(){
         CustomerDAO customerDAO = instance.getCustomerDAO();
+        DepositDAO depositDAO = instance.getDepositDAO();
         customerDAO.deleteAll();
 
         Customer customer = new Customer();
@@ -52,7 +55,23 @@ public class HibernateCustomerDAOTest {
 
         customer.setBanks(new ArrayList<Bank>(){{add(bank);}});
 
+        Deposit deposit =new Deposit();
+        deposit.setDep(new BigDecimal("4567"));
+        depositDAO.insertDeposit(deposit);
+
+        CustomerDeposit customerDeposit =new CustomerDeposit();
+        customerDeposit.setCustomer(customer);
+        customerDeposit.setDeposit(deposit);
+        List<CustomerDeposit> customerDeposits = new ArrayList<>();
+        customerDeposits.add(customerDeposit);
+
+        deposit.setCustomerDeposit(customerDeposits);
+        customer.setCustomerDeposits(customerDeposits);
+
         customerDAO.insertCustomer(customer);
+
+        List<Deposit> deposits = depositDAO.findDepositByCustomer("Vasya");
+        assertEquals(deposits.get(0).getDep().toString(),"4567.00");
 
         //new customer
         GoodCustomer goodCustomer = new GoodCustomer();
@@ -70,6 +89,7 @@ public class HibernateCustomerDAOTest {
         goodCustomer.setBanks(new ArrayList<Bank>(){{add(newBank);}});
 
         customerDAO.insertCustomer(goodCustomer);
+
 
 
         //new customer
@@ -91,7 +111,7 @@ public class HibernateCustomerDAOTest {
         customerDAO.insertCustomer(customer2);
 
         List<Customer> customers = customerDAO.getAllCustomers();
-//        customers.get(0).getOrders().get(0).getName(); //error in the case of LAZY.
+                //        customers.get(0).getOrders().get(0).getName(); //error in the case of LAZY.
 
         Customer customerResult = customers.stream()
                                            .filter(c -> c.getName().equals("Vasya"))
@@ -144,6 +164,7 @@ public class HibernateCustomerDAOTest {
         customer1.setName("Kolya");
 
         customerDAO.updateCustomer(customer1);
+
 
 
     }

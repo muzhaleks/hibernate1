@@ -15,4 +15,7 @@ public interface CustomerDAO {
     Customer findCustomer(String name, String surename);
 
     void updateCustomer(Customer customer);
+
+
+
 }

@@ -1,9 +1,6 @@
 package com.infopulse.factory;
 
-import com.infopulse.dao.CustomerDAO;
-import com.infopulse.dao.GoodsDAO;
-import com.infopulse.dao.GoodsDAOImpl;
-import com.infopulse.dao.HibernateCustomerDAO;
+import com.infopulse.dao.*;
 import org.hibernate.SessionFactory;
 
 import javax.persistence.Persistence;
@@ -27,5 +24,9 @@ public class Factory {
     }
     public GoodsDAO getGoodsDAO(){
         return new GoodsDAOImpl(sessionFactory);
+    }
+
+    public DepositDAO getDepositDAO(){
+        return new HibernateDepositDAO(sessionFactory);
     }
 }
