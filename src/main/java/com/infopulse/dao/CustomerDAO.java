@@ -3,6 +3,7 @@ package com.infopulse.dao;
 import com.infopulse.entity.Count;
 import com.infopulse.entity.Customer;
 import com.infopulse.entity.Phone;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -26,6 +27,6 @@ public interface CustomerDAO {
 
     public List<String> findPhoneByCustomerName(String name);
 
-
+    public SessionFactory getSessionFactory();
 
 }

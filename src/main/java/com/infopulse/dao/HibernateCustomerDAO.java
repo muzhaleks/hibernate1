@@ -58,6 +58,8 @@ public class HibernateCustomerDAO implements CustomerDAO{
         entityManager.getTransaction().begin();
         Customer customer = entityManager
                 .createQuery( "from Customer c where c.name = :name AND c.surename = :surename", Customer.class)
+                .setHint("org.hibernate.cacheable", Boolean.TRUE)
+                .setHint("org.hibernate.cacheRegion", "myregion")
                 .setParameter("name", name)
                 .setParameter("surename", surename)
                 .getResultList()
@@ -117,6 +119,10 @@ public class HibernateCustomerDAO implements CustomerDAO{
         return customer;
 
 
+    }
+
+    public SessionFactory getSessionFactory(){
+        return sessionFactory;
     }
 
     @Override

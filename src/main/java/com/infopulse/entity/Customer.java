@@ -18,10 +18,12 @@ import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 @Setter
 @Getter
 @NoArgsConstructor
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "myregion")
 @Entity
 @Table(name="customers")
 @Inheritance(strategy=TABLE_PER_CLASS)
-@DynamicUpdate
+//@DynamicUpdate
 //@DiscriminatorColumn(name="Typecli", discriminatorType=STRING, length=20)
 //@DiscriminatorValue("CUSTOMER")
 public class Customer {
@@ -51,13 +53,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Order> orders = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     Phone phone;
 
     @ManyToMany(mappedBy = "customers", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     List<Bank> banks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<CustomerDeposit> customerDeposits = new ArrayList<>();
 
     public void addOrder(Order order){

@@ -2,6 +2,7 @@ package com.infopulse.factory;
 
 import com.infopulse.dao.*;
 import org.hibernate.SessionFactory;
+import org.hibernate.stat.Statistics;
 
 import javax.persistence.Persistence;
 
@@ -13,6 +14,8 @@ public class Factory {
     private Factory(){
         sessionFactory = (SessionFactory) Persistence
                 .createEntityManagerFactory( "org.hibernate.tutorial.jpa" );
+        Statistics stat = sessionFactory.getStatistics();
+        stat.setStatisticsEnabled(true);
     }
 
     public static Factory getInstance(){

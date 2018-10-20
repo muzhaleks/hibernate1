@@ -2,20 +2,27 @@ package com.infopulse.dao;
 
 import com.infopulse.entity.*;
 import com.infopulse.factory.Factory;
+import net.sf.ehcache.CacheManager;
+import org.hibernate.SessionFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+
 
 public class HibernateCustomerDAOTest {
 
     private Factory instance = Factory.getInstance();
 
-
+    @Ignore
     @Test
     public void  insertAndSelectEntityTest(){
         CustomerDAO customerDAO = instance.getCustomerDAO();
@@ -181,4 +188,90 @@ public class HibernateCustomerDAOTest {
 
 
     }
+
+    @Test
+    public void  insertAndSelectEntityTest_Cache() {
+        CustomerDAO customerDAO = instance.getCustomerDAO();
+
+        DepositDAO depositDAO = instance.getDepositDAO();
+        customerDAO.deleteAll();
+
+        Customer customer = new Customer();
+        customer.setName("Vasya");
+        customer.setSurename("Pupkin");
+        Address address = new Address();
+        address.setStreet("aaaaaaa");
+        address.setCity("Kiev");
+        customer.setAddress(address);
+
+        Order order1 = new Order();
+        order1.setName("ffff");
+        order1.setCustomer(customer);
+
+        Order order2 = new Order();
+        order2.setName("jjjj");
+        order2.setCustomer(customer);
+
+        customer.addOrder(order1);
+        customer.addOrder(order2);
+
+        Phone phone = new Phone();
+        phone.setPhoneNumber("555777888");
+        phone.setCustomer(customer);
+
+        customer.setPhone(phone);
+
+        Bank bank = new Bank();
+        bank.setName("Private");
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(customer);
+        bank.setCustomers(customerList);
+
+        customer.setBanks(new ArrayList<Bank>() {{
+            add(bank);
+        }});
+
+        Deposit deposit = new Deposit();
+        deposit.setDep(new BigDecimal("4567"));
+        depositDAO.insertDeposit(deposit);
+
+        CustomerDeposit customerDeposit = new CustomerDeposit();
+        customerDeposit.setCustomer(customer);
+        customerDeposit.setDeposit(deposit);
+        List<CustomerDeposit> customerDeposits = new ArrayList<>();
+        customerDeposits.add(customerDeposit);
+
+        deposit.setCustomerDeposit(customerDeposits);
+        customer.setCustomerDeposits(customerDeposits);
+
+        customerDAO.insertCustomer(customer);
+
+        Customer customer1 = customerDAO.findCustomerCriteria("Vasya", "Pupkin");
+        assertEquals(customer1.getName(),"Vasya");
+
+        Customer customer2 = customerDAO.findCustomerCriteria("Vasya", "Pupkin");
+        assertEquals(customer2.getName(),"Vasya");
+
+        Customer customer3 = customerDAO.findCustomerCriteria("Vasya", "Pupkin");
+        assertEquals(customer3.getName(),"Vasya");
+
+//        int size = CacheManager.ALL_CACHE_MANAGERS.get(0)
+//                .getCache("com.infopulse.entity.Customer").getSize();
+//        assertEquals(size, 0);
+
+        SessionFactory sessionFactory = customerDAO.getSessionFactory();
+
+        boolean element = sessionFactory
+                .getCache().containsEntity(Customer.class, customer.getId());
+        assertTrue(element);
+
+        Long elements = sessionFactory.getStatistics().getCacheRegionStatistics("myregion").getElementCountInMemory();
+
+
+        assertEquals(elements.intValue(), 0);
+
+
+    }
+
+
 }
