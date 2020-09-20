@@ -19,4 +19,12 @@ public class BadBank extends Bank{
 
     @Column(name="black_list")
     private String blackList;
+
+    public String getBlackList() {
+        return blackList;
+    }
+
+    public void setBlackList(String blackList) {
+        this.blackList = blackList;
+    }
 }

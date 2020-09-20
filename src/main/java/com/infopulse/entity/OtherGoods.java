@@ -18,4 +18,20 @@ public class OtherGoods {
 
     @Column(name="name", unique = false, nullable = false)
     String name;
+
+    public OtherCompositeKey getCompositeKey() {
+        return compositeKey;
+    }
+
+    public void setCompositeKey(OtherCompositeKey compositeKey) {
+        this.compositeKey = compositeKey;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

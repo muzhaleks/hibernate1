@@ -66,6 +66,85 @@ public class Customer {
         orders.add(order);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getSurename() {
+        return surename;
+    }
+
+    public void setSurename(String surename) {
+        this.surename = surename;
+    }
+
+    public String getNameSurname() {
+        return nameSurname;
+    }
+
+    public void setNameSurname(String nameSurname) {
+        this.nameSurname = nameSurname;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
+    }
+
+    public List<Bank> getBanks() {
+        return banks;
+    }
+
+    public void setBanks(List<Bank> banks) {
+        this.banks = banks;
+    }
+
+    public List<CustomerDeposit> getCustomerDeposits() {
+        return customerDeposits;
+    }
+
+    public void setCustomerDeposits(List<CustomerDeposit> customerDeposits) {
+        this.customerDeposits = customerDeposits;
+    }
 
     @PostPersist
     @PostLoad

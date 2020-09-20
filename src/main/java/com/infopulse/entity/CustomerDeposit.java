@@ -23,4 +23,28 @@ public class CustomerDeposit {
 
     @ManyToOne
     private Deposit deposit;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Deposit getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Deposit deposit) {
+        this.deposit = deposit;
+    }
 }

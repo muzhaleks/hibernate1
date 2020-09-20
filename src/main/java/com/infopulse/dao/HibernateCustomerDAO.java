@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import java.util.List;
 
-public class HibernateCustomerDAO implements CustomerDAO{
+public class    HibernateCustomerDAO implements CustomerDAO{
     private final SessionFactory sessionFactory;
 
     public HibernateCustomerDAO(SessionFactory sessionFactory) {

@@ -28,4 +28,28 @@ public class Deposit {
 
     @OneToMany(mappedBy = "deposit", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     List<CustomerDeposit> customerDeposit = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getDep() {
+        return dep;
+    }
+
+    public void setDep(BigDecimal dep) {
+        this.dep = dep;
+    }
+
+    public List<CustomerDeposit> getCustomerDeposit() {
+        return customerDeposit;
+    }
+
+    public void setCustomerDeposit(List<CustomerDeposit> customerDeposit) {
+        this.customerDeposit = customerDeposit;
+    }
 }

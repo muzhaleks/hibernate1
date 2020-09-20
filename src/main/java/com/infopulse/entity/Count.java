@@ -9,4 +9,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Count {
     long number;
+
+    public long getNumber() {
+        return number;
+    }
+
+    public void setNumber(long number) {
+        this.number = number;
+    }
 }
